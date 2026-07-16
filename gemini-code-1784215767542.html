@@ -1,0 +1,751 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>SÖILE — тест на уровень английского</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"><style>
+  :root{
+    --navy:#1e6b8a; /* Фирменный глубокий сине-бирюзовый SÖILE */
+    --navy-2:#1e6b8a99;
+    --red:#ff635f; /* Кораллово-красный SÖILE */
+    --red-deep:#d44d4a;
+    --white:#FFFFFF;
+    --paper:#F5F6FA;
+    --ink:#14213D;
+    --muted:#5C6B8A;
+    --line:#D8DDEA;
+    --green:#1E8A5B;
+    --green-bg:#EAF6EF;
+    --red-bg:#FBF0F1;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  .stripe{
+    height:8px;
+    width:100%;
+    background:linear-gradient(90deg, var(--red) 0 33%, var(--white) 33% 66%, var(--navy) 66% 100%);
+  }
+  .wrap{
+    max-width:720px;
+    margin:0 auto;
+    padding:48px 24px 80px;
+  }
+  header.top{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    margin-bottom:44px;
+  }
+  .crest{
+    width:64px;
+    height:64px;
+    object-fit:contain;
+    flex:none;
+    border-radius:50%;
+  }
+  .brandtext .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--red);
+    font-weight:500;
+    margin-bottom:4px;
+  }
+  .brandtext h1{
+    font-family:'Fraunces', serif;
+    font-size:26px;
+    font-weight:600;
+    margin:0;
+    line-height:1.1;
+    color:var(--navy);
+  }
+  /* CARD */
+  .card{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:44px 40px;
+    position:relative;
+    overflow:hidden;
+    box-shadow:0 1px 0 var(--line);
+  }
+  .card::before{
+    content:"";
+    position:absolute;
+    top:0; right:0;
+    width:0; height:0;
+    border-style:solid;
+    border-width:0 46px 46px 0;
+    border-color:transparent var(--red) transparent transparent;
+  }
+  .card::after{
+    content:"";
+    position:absolute;
+    top:0; right:0;
+    width:0; height:0;
+    border-style:solid;
+    border-width:0 46px 46px 0;
+    border-color:transparent var(--navy) transparent transparent;
+    clip-path: polygon(100% 0, 100% 46px, 78px 0);
+  }
+
+  /* INTRO */
+  #screen-intro h2{
+    font-family:'Fraunces', serif;
+    font-size:32px;
+    font-weight:600;
+    line-height:1.15;
+    margin:0 0 14px;
+    max-width:480px;
+  }
+  #screen-intro p.lead{
+    color:var(--muted);
+    font-size:16px;
+    line-height:1.6;
+    margin:0 0 28px;
+    max-width:480px;
+  }
+  .meta-row{
+    display:flex;
+    gap:28px;
+    margin-bottom:32px;
+    flex-wrap:wrap;
+  }
+  .meta-item .num{
+    font-family:'Fraunces', serif;
+    font-size:22px;
+    font-weight:600;
+    color:var(--navy);
+  }
+  .meta-item .lbl{
+    font-size:12px;
+    color:var(--muted);
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    margin-top:2px;
+  }
+  .cefr-strip{
+    display:flex;
+    border:1px solid var(--line);
+    border-radius:3px;
+    overflow:hidden;
+    margin-bottom:32px;
+  }
+  .cefr-strip span{
+    flex:1;
+    text-align:center;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    padding:8px 0;
+    color:var(--muted);
+    border-right:1px solid var(--line);
+  }
+  .cefr-strip span:last-child{border-right:none;}
+
+  button.primary{
+    background:var(--navy);
+    color:var(--white);
+    border:none;
+    padding:14px 28px;
+    font-family:'Inter',sans-serif;
+    font-size:15px;
+    font-weight:600;
+    border-radius:3px;
+    cursor:pointer;
+    transition:background .15s ease, transform .1s ease;
+  }
+  button.primary:hover{background:#17526a;}
+  button.primary:active{transform:translateY(1px);}
+  button.primary:disabled{background:#B7BECF; cursor:not-allowed;}
+  button.ghost{
+    background:none;
+    border:1px solid var(--line);
+    color:var(--muted);
+    padding:12px 22px;
+    font-family:'Inter',sans-serif;
+    font-size:14px;
+    font-weight:500;
+    border-radius:3px;
+    cursor:pointer;
+  }
+  button.ghost:hover{border-color:var(--navy); color:var(--navy);}
+
+  /* PROGRESS */
+  #screen-quiz .progress-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    margin-bottom:18px;
+  }
+  .qcount{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--muted);
+    letter-spacing:.05em;
+  }
+  .qlevel-tag{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    padding:3px 9px;
+    border-radius:2px;
+    background:var(--paper);
+    color:var(--red);
+    border:1px solid var(--line);
+    text-transform:uppercase;
+  }
+  .track{
+    height:5px;
+    width:100%;
+    background:var(--paper);
+    border-radius:3px;
+    overflow:hidden;
+    margin-bottom:32px;
+    display:flex;
+  }
+  .track .fill{
+    height:100%;
+    background:repeating-linear-gradient(115deg, var(--red) 0 10px, var(--navy) 10px 20px);
+    transition:width .3s ease;
+  }
+  #q-text{
+    font-family:'Fraunces', serif;
+    font-size:22px;
+    font-weight:500;
+    line-height:1.4;
+    margin:0 0 26px;
+    color:var(--ink);
+  }
+  .options{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-bottom:32px;
+  }
+  .opt{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:14px 16px;
+    border:1px solid var(--line);
+    border-radius:3px;
+    cursor:pointer;
+    font-size:15px;
+    transition:border-color .12s ease, background .12s ease;
+  }
+  .opt:hover{border-color:var(--navy);}
+  .opt.selected{
+    border-color:var(--red);
+    background:#FBF0F1;
+  }
+  .opt .letter{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--muted);
+    width:18px;
+    flex:none;
+  }
+  .opt.selected .letter{color:var(--red); font-weight:600;}
+  .nav-row{
+    display:flex;
+    justify-content:flex-end;
+    gap:12px;
+  }
+
+  /* RESULT */
+  #screen-result{display:none;}
+  .result-top{
+    text-align:center;
+    padding-bottom:28px;
+    border-bottom:1px solid var(--line);
+    margin-bottom:28px;
+  }
+  .result-top .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-bottom:14px;
+  }
+  .level-badge{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:104px; height:104px;
+    border-radius:50%;
+    border:3px solid var(--navy);
+    position:relative;
+    margin-bottom:16px;
+  }
+  .level-badge::before{
+    content:"";
+    position:absolute;
+    inset:-3px;
+    border-radius:50%;
+    border:1px solid var(--red);
+    margin:6px;
+  }
+  .level-badge span{
+    font-family:'Fraunces', serif;
+    font-size:36px;
+    font-weight:700;
+    color:var(--navy);
+  }
+  .result-top h2{
+    font-family:'Fraunces', serif;
+    font-size:26px;
+    font-weight:600;
+    margin:0 0 8px;
+  }
+  .result-top .score-line{
+    color:var(--muted);
+    font-size:14px;
+  }
+  .result-body p{
+    font-size:15.5px;
+    line-height:1.7;
+    color:var(--ink);
+    margin:0 0 22px;
+  }
+  .rec-box{
+    background:var(--paper);
+    border-left:3px solid var(--red);
+    padding:18px 20px;
+    border-radius:2px;
+    margin-bottom:28px;
+  }
+  .rec-box .rec-title{
+    font-weight:600;
+    font-size:14px;
+    margin-bottom:6px;
+    color:var(--navy);
+  }
+  .rec-box p{margin:0; font-size:14.5px; color:var(--muted);}
+  .result-actions{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+
+  /* REVIEW */
+  #screen-review{display:none;}
+  .review-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:24px;
+    padding-bottom:20px;
+    border-bottom:1px solid var(--line);
+  }
+  .review-head h2{
+    font-family:'Fraunces', serif;
+    font-size:22px;
+    font-weight:600;
+    margin:0;
+    color:var(--navy);
+  }
+  .review-summary{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--muted);
+  }
+  .review-item{
+    border:1px solid var(--line);
+    border-radius:3px;
+    padding:18px 20px;
+    margin-bottom:14px;
+  }
+  .review-item.correct{border-left:3px solid var(--green);}
+  .review-item.incorrect{border-left:3px solid var(--red);}
+  .review-item-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:10px;
+  }
+  .review-num{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    color:var(--muted);
+  }
+  .review-status{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    padding:2px 8px;
+    border-radius:2px;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+  }
+  .review-status.correct{background:var(--green-bg); color:var(--green);}
+  .review-status.incorrect{background:var(--red-bg); color:var(--red);}
+  .review-q{
+    font-family:'Fraunces', serif;
+    font-size:16.5px;
+    font-weight:500;
+    margin:0 0 10px;
+    color:var(--ink);
+  }
+  .review-answers{
+    font-size:14px;
+    line-height:1.7;
+  }
+  .review-answers .your-ans{color:var(--red-deep);}
+  .review-answers .correct-ans{color:var(--green);}
+  .review-rule{
+    margin-top:10px;
+    padding:10px 14px;
+    background:var(--paper);
+    border-radius:2px;
+    font-size:13.5px;
+    color:var(--muted);
+    line-height:1.6;
+  }
+  .review-rule b{color:var(--navy);}
+
+  /* CONTACT */
+  .contact-box{
+    margin-top:20px;
+    padding-top:24px;
+    border-top:1px solid var(--line);
+  }
+  .contact-title{
+    font-family:'Fraunces', serif;
+    font-size:17px;
+    font-weight:600;
+    color:var(--navy);
+    margin:0 0 14px;
+  }
+  .contact-rows{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .contact-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:14px;
+    color:var(--ink);
+  }
+  .contact-row .ico{
+    flex:none;
+    width:20px; height:20px;
+    color:var(--red);
+  }
+  .contact-row a{color:var(--ink); text-decoration:none;}
+  .contact-row a:hover{color:var(--red);}
+
+  footer{
+    text-align:center;
+    margin-top:36px;
+    color:var(--muted);
+    font-size:12.5px;
+  }
+  footer .name{color:var(--navy); font-weight:600;}
+
+  @media (max-width:520px){
+    .card{padding:30px 22px;}
+    #screen-intro h2{font-size:26px;}
+    #q-text{font-size:19px;}
+    .review-head{flex-direction:column; align-items:flex-start; gap:8px;}
+  }</style></head><body><div class="stripe"></div><div class="wrap">
+
+  <header class="top">
+    <!-- Ваш официальный логотип SÖILE -->
+    <img class="crest" src="logo.png" alt="SÖILE">
+    <div class="brandtext">
+      <div class="eyebrow">SÖILE</div>
+      <h1>Тест на уровень английского</h1>
+    </div>
+  </header>
+
+  <div class="card">
+
+    <!-- INTRO -->
+    <div id="screen-intro">
+      <h2>Узнайте свой уровень за 7 минут</h2>
+      <p class="lead">30 вопросов — от базовой грамматики до тонкостей на уровне носителя. В конце вы получите ваш уровень по шкале CEFR, рекомендацию по группе и разбор всех ответов с объяснением правил.</p>
+
+      <div class="meta-row">
+        <div class="meta-item"><div class="num">30</div><div class="lbl">вопросов</div></div>
+        <div class="meta-item"><div class="num">~7</div><div class="lbl">минут</div></div>
+        <div class="meta-item"><div class="num">A1–C2</div><div class="lbl">шкала CEFR</div></div>
+      </div>
+
+      <div class="cefr-strip">
+        <span>A1</span><span>A2</span><span>B1</span><span>B2</span><span>C1</span><span>C2</span>
+      </div>
+
+      <button class="primary" onclick="startQuiz()">Начать тест</button>
+    </div>
+
+    <!-- QUIZ -->
+    <div id="screen-quiz" style="display:none;">
+      <div class="progress-head">
+        <span class="qcount" id="qcount">Вопрос 1 из 30</span>
+        <span class="qlevel-tag" id="qleveltag">A1</span>
+      </div>
+      <div class="track"><div class="fill" id="fill" style="width:5%;"></div></div>
+
+      <p id="q-text"></p>
+      <div class="options" id="options"></div>
+
+      <div class="nav-row">
+        <button class="primary" id="nextBtn" onclick="nextQuestion()" disabled>Далее</button>
+      </div>
+    </div>
+
+    <!-- RESULT -->
+    <div id="screen-result">
+      <div class="result-top">
+        <div class="eyebrow">Ваш результат</div>
+        <div class="level-badge"><span id="levelCode">B1</span></div>
+        <h2 id="levelName">Средний уровень</h2>
+        <div class="score-line" id="scoreLine">14 из 30 верно</div>
+      </div>
+      <div class="result-body">
+        <p id="levelDesc"></p>
+        <div class="rec-box">
+          <div class="rec-title">Рекомендация SÖILE</div>
+          <p id="levelRec"></p>
+        </div>
+        <div class="result-actions">
+          <button class="primary" onclick="showReview()">Посмотреть ответы</button>
+          <button class="ghost" onclick="restartQuiz()">Пройти тест заново</button>
+        </div>
+
+        <div class="contact-box">
+          <div class="contact-title">Записаться на консультацию</div>
+          <div class="contact-rows">
+            <div class="contact-row">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.34 1.78.66 2.61a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.47-1.23a2 2 0 0 1 2.11-.45c.83.32 1.71.54 2.61.66A2 2 0 0 1 22 16.92z"/></svg>
+              <a href="tel:+77780010530">+7 778 001 0530</a>
+            </div>
+            <div class="contact-row">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span>ул. Керей Жанибек хандар, 50/3</span>
+            </div>
+            <div class="contact-row">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              <a href="https://instagram.com/soile.astana" target="_blank" rel="noopener">@soile.astana</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REVIEW -->
+    <div id="screen-review">
+      <div class="review-head">
+        <h2>Разбор ответов</h2>
+        <span class="review-summary" id="reviewSummary">14 из 30 верно</span>
+      </div>
+      <div id="reviewList"></div>
+      <div class="result-actions" style="margin-top:8px;">
+        <button class="ghost" onclick="backToResult()">Назад к результату</button>
+        <button class="primary" onclick="restartQuiz()">Пройти тест заново</button>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <span class="name">SÖILE</span> — результат теста носит ориентировочный характер; точный уровень определит преподаватель на вводном занятии.
+  </footer></div><script>const questions = [
+  // A1
+  {level:'A1', text:"She ___ a teacher.", options:["is","are","am","be"], correct:0,
+   rule:"Глагол <b>to be</b> согласуется с подлежащим: she is, he is, it is."},
+  {level:'A1', text:"I have ___ apple.", options:["a","an","the","—"], correct:1,
+   rule:"Перед словом, начинающимся с гласного звука, используется <b>an</b>: an apple."},
+  {level:'A1', text:"They ___ from Spain.", options:["is","am","are","be"], correct:2,
+   rule:"Со множественным числом (they, we, you) глагол to be — <b>are</b>."},
+  {level:'A1', text:"This is my dog. ___ name is Rex.", options:["He","His","Him","Her"], correct:1,
+   rule:"Притяжательное местоимение ставится перед существительным: <b>his</b> name (не he name)."},
+  {level:'A1', text:"What ___ your name?", options:["is","are","be","am"], correct:0,
+   rule:"Name — единственное число, поэтому используется <b>is</b>: What is your name?"},
+
+  // A2
+  {level:'A2', text:"I ___ to the cinema yesterday.", options:["go","went","goes","gone"], correct:1,
+   rule:"Yesterday указывает на прошедшее время — используется Past Simple: <b>went</b> (go–went–gone)."},
+  {level:'A2', text:"She is ___ than her brother.", options:["tall","taller","tallest","more tall"], correct:1,
+   rule:"Сравнительная степень коротких прилагательных образуется через -er: tall → <b>taller</b>."},
+  {level:'A2', text:"There ___ some milk in the fridge.", options:["is","are","be","am"], correct:0,
+   rule:"Milk — неисчисляемое существительное, поэтому используется <b>is</b>: there is some milk."},
+  {level:'A2', text:"He ___ football every Sunday.", options:["play","plays","playing","played"], correct:1,
+   rule:"В Present Simple с he/she/it к глаголу добавляется -s: he <b>plays</b>."},
+  {level:'A2', text:"Can you ___ me the salt, please?", options:["pass","passing","passed","to pass"], correct:0,
+   rule:"После модального глагола can используется инфинитив без to: can <b>pass</b>."},
+
+  // B1
+  {level:'B1', text:"If it rains tomorrow, I ___ stay at home.", options:["will","would","am","was"], correct:0,
+   rule:"Первый тип условных предложений: If + Present Simple, <b>will</b> + инфинитив."},
+  {level:'B1', text:"She has been living here ___ 2015.", options:["for","since","from","at"], correct:1,
+   rule:"<b>Since</b> используется с указанием точки во времени (2015), for — с периодом (five years)."},
+  {level:'B1', text:"By the time we arrived, the film ___ already started.", options:["has","had","have","was"], correct:1,
+   rule:"Past Perfect (<b>had</b> + V3) описывает действие, завершившееся до другого момента в прошлом."},
+  {level:'B1', text:"I'm looking forward to ___ you soon.", options:["see","seeing","saw","seen"], correct:1,
+   rule:"После предлога to в выражении 'look forward to' используется герундий: <b>seeing</b>."},
+  {level:'B1', text:"You ___ better go now, or you'll miss the bus.", options:["had","have","has","having"], correct:0,
+   rule:"Устойчивая конструкция <b>had better</b> используется для совета и всегда пишется с had."},
+
+  // B2
+  {level:'B2', text:"Had I known about the meeting, I ___ attended.", options:["would have","will have","would","had"], correct:0,
+   rule:"Инвертированное условное предложение третьего типа (без if): Had I known..., I <b>would have</b> attended."},
+  {level:'B2', text:"The report, ___ was submitted late, contained several errors.", options:["that","which","who","what"], correct:1,
+   rule:"В неопределяющем придаточном предложении (после запятой) используется <b>which</b>, не that."},
+  {level:'B2', text:"Not only ___ the deadline, but he also improved the quality.", options:["he met","did he meet","he did meet","meets he"], correct:1,
+   rule:"После вводного отрицательного наречия (Not only) в начале предложения используется инверсия: <b>did he meet</b>."},
+  {level:'B2', text:"I'd rather you ___ smoke in here.", options:["didn't","don't","not","wouldn't"], correct:0,
+   rule:"Конструкция 'I'd rather + подлежащее + Past Simple' выражает предпочтение о действиях другого человека: <b>didn't</b>."},
+  {level:'B2', text:"The more you practice, ___ you become.", options:["the more fluent","more fluent","the most fluent","fluenter"], correct:0,
+   rule:"Параллельная конструкция 'the more..., the more...' требует <b>the</b> перед сравнительной степенью в обеих частях."},
+
+  // C1
+  {level:'C1', text:"Scarcely ___ the meeting begun when the fire alarm rang.", options:["had","did","has","was"], correct:0,
+   rule:"После наречия scarcely в начале предложения — инверсия с Past Perfect: Scarcely <b>had</b>... when."},
+  {level:'C1', text:"Her argument, though seemingly persuasive, ___ on a flawed premise.", options:["rests","is resting","rest","rested"], correct:0,
+   rule:"Present Simple используется для описания сути аргумента как устойчивого факта: <b>rests</b>."},
+  {level:'C1', text:"___ the committee's objections, the proposal was approved.", options:["Despite of","In spite","Notwithstanding","Although"], correct:2,
+   rule:"<b>Notwithstanding</b> — формальный предлог со значением 'несмотря на', употребляется без of."},
+  {level:'C1', text:"___ for his quick thinking, the situation could have been far worse.", options:["Had it not been","If it hadn't been","Were it not been","Should it not been"], correct:0,
+   rule:"Инвертированная форма третьего условного без if: <b>Had it not been</b> for... (= If it had not been for...)."},
+  {level:'C1', text:"No sooner ___ the announcement than the stock price plummeted.", options:["had they made","they had made","did they make","have they made"], correct:0,
+   rule:"После 'no sooner' в начале предложения — инверсия с Past Perfect: No sooner <b>had they made</b>... than."},
+
+  // C2
+  {level:'C2', text:"It was not until she reached forty ___ she decided to pursue painting seriously.", options:["that","when","which","then"], correct:0,
+   rule:"Расщеплённое предложение (cleft sentence): It was not until X <b>that</b> Y."},
+  {level:'C2', text:"The committee insisted that the report ___ revised before submission.", options:["is","be","was","would be"], correct:1,
+   rule:"После глаголов требования (insist, demand, suggest) используется сослагательное наклонение: that + подлежащее + <b>be</b>."},
+  {level:'C2', text:"Little ___ he realize the consequences of his decision.", options:["did","he did","does","he does"], correct:0,
+   rule:"Отрицательное наречие little в начале предложения требует инверсии: Little <b>did</b> he realize."},
+  {level:'C2', text:"So subtle ___ the change that few people noticed it.", options:["was","is","were","has been"], correct:0,
+   rule:"Конструкция 'so + прилагательное + was/is + подлежащее' — инверсия для усиления: So subtle <b>was</b> the change."},
+  {level:'C2', text:"Were she to receive the promotion, she ___ relocate to London immediately.", options:["would","will","is going to","had"], correct:0,
+   rule:"Инвертированное условное с 'were... to' (гипотетическое будущее): Were she to..., she <b>would</b>..."},
+];let current = 0;let answers = new Array(questions.length).fill(null);function startQuiz(){
+  document.getElementById('screen-intro').style.display = 'none';
+  document.getElementById('screen-quiz').style.display = 'block';
+  renderQuestion();
+}function renderQuestion(){
+  const q = questions[current];
+  document.getElementById('qcount').textContent = `Вопрос ${current+1} из ${questions.length}`;
+  document.getElementById('qleveltag').textContent = q.level;
+  document.getElementById('fill').style.width = `${((current+1)/questions.length)*100}%`;
+  document.getElementById('q-text').textContent = q.text;
+
+  const optWrap = document.getElementById('options');
+  optWrap.innerHTML = '';
+  const letters = ['A','B','C','D'];
+  q.options.forEach((opt, i) => {
+    const div = document.createElement('div');
+    div.className = 'opt' + (answers[current] === i ? ' selected' : '');
+    div.innerHTML = `<span class="letter">${letters[i]}</span><span>${opt}</span>`;
+    div.onclick = () => selectOption(i);
+    optWrap.appendChild(div);
+  });
+
+  document.getElementById('nextBtn').disabled = answers[current] === null;
+  document.getElementById('nextBtn').textContent = current === questions.length - 1 ? 'Показать результат' : 'Далее';
+}function selectOption(i){
+  answers[current] = i;
+  renderQuestion();
+}function nextQuestion(){
+  if (answers[current] === null) return;
+  if (current < questions.length - 1){
+    current++;
+    renderQuestion();
+  } else {
+    showResult();
+  }
+}function getScore(){
+  let score = 0;
+  answers.forEach((a, i) => { if (a === questions[i].correct) score++; });
+  return score;
+}function showResult(){
+  const score = getScore();
+
+  document.getElementById('screen-quiz').style.display = 'none';
+  document.getElementById('screen-review').style.display = 'none';
+  document.getElementById('screen-result').style.display = 'block';
+
+  let code, name, desc, rec;
+  if (score <= 7){
+    code='A1'; name='Начальный уровень';
+    desc='Вы понимаете и используете простейшие фразы и выражения, связанные с базовыми потребностями: приветствие, представление себя, простые вопросы о себе и других.';
+    rec='Рекомендуем начать с группы General English A1 в языковой школе SÖILE — курс строится на разговорной практике с нуля, без опоры на уже имеющиеся знания.';
+  } else if (score <= 12){
+    code='A2'; name='Элементарный уровень';
+    desc='Вы можете общаться в простых бытовых ситуациях, понимаете короткие тексты на знакомые темы и умеете строить несложные предложения о повседневной жизни.';
+    rec='Подойдёт курс General English A2 в SÖILE: расширение словарного запаса и первые устойчивые грамматические конструкции.';
+  } else if (score <= 17){
+    code='B1'; name='Средний уровень';
+    desc='Вы способны поддерживать беседу на знакомые темы, понимать основную мысль текстов средней сложности и описывать события, планы и мнения.';
+    rec='Оптимально подойдёт группа Intermediate B1 в SÖILE с акцентом на разговорную практику и уверенное использование времён.';
+  } else if (score <= 22){
+    code='B2'; name='Уровень выше среднего';
+    desc='Вы свободно общаетесь на большинство тем, понимаете сложные тексты и можете аргументированно излагать свою точку зрения как в устной, так и в письменной речи.';
+    rec='Рекомендуем курс Upper-Intermediate B2 в SÖILE с упором на беглость речи, идиоматику и подготовку к международным экзаменам.';
+  } else if (score <= 26){
+    code='C1'; name='Продвинутый уровень';
+    desc='Вы гибко и эффективно используете язык в профессиональном и академическом контексте, свободно понимаете сложные тексты и улавливаете скрытые смысловые оттенки.';
+    rec='Подойдёт курс Advanced C1 в SÖILE: работа над стилистикой, деловым английским и подготовкой к экзаменам уровня CAE/IELTS 7+.';
+  } else {
+    code='C2'; name='Уровень носителя языка';
+    desc='Вы понимаете практически всё, что слышите и читаете, и выражаете мысли точно и свободно даже в самых сложных ситуациях, включая нюансы и оттенки смысла.';
+    rec='Рекомендуем клуб разговорной практики Proficiency C2 в SÖILE либо подготовку к CPE — для поддержания и оттачивания уже высокого уровня.';
+  }
+
+  document.getElementById('levelCode').textContent = code;
+  document.getElementById('levelName').textContent = name;
+  document.getElementById('scoreLine').textContent = `${score} из ${questions.length} верно`;
+  document.getElementById('levelDesc').textContent = desc;
+  document.getElementById('levelRec').textContent = rec;
+}function showReview(){
+  const score = getScore();
+  document.getElementById('reviewSummary').textContent = `${score} из ${questions.length} верно`;
+
+  const letters = ['A','B','C','D'];
+  const list = document.getElementById('reviewList');
+  list.innerHTML = '';
+
+  questions.forEach((q, i) => {
+    const userAns = answers[i];
+    const isCorrect = userAns === q.correct;
+    const item = document.createElement('div');
+    item.className = 'review-item ' + (isCorrect ? 'correct' : 'incorrect');
+
+    let answersHtml = `<span class="your-ans">Ваш ответ: ${letters[userAns]}. ${q.options[userAns]}</span>`;
+    let ruleHtml = '';
+    if (!isCorrect){
+      answersHtml += `<br><span class="correct-ans">Правильный ответ: ${letters[q.correct]}. ${q.options[q.correct]}</span>`;
+      ruleHtml = `<div class="review-rule">${q.rule}</div>`;
+    }
+
+    item.innerHTML = `
+      <div class="review-item-head">
+        <span class="review-num">Вопрос ${i+1} · ${q.level}</span>
+        <span class="review-status ${isCorrect ? 'correct' : 'incorrect'}">${isCorrect ? 'Верно' : 'Ошибка'}</span>
+      </div>
+      <p class="review-q">${q.text}</p>
+      <div class="review-answers">${answersHtml}</div>
+      ${ruleHtml}
+    `;
+    list.appendChild(item);
+  });
+
+  document.getElementById('screen-result').style.display = 'none';
+  document.getElementById('screen-review').style.display = 'block';
+}function backToResult(){
+  document.getElementById('screen-review').style.display = 'none';
+  document.getElementById('screen-result').style.display = 'block';
+}function restartQuiz(){
+  current = 0;
+  answers = new Array(questions.length).fill(null);
+  document.getElementById('screen-review').style.display = 'none';
+  document.getElementById('screen-result').style.display = 'none';
+  document.getElementById('screen-intro').style.display = 'block';
+}</script></body></html>
